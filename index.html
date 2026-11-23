@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Introduction to Cloud Computing</title>
+  <meta name="description" content="Interactive slide viewer and study notes: cloud computing basics, service and deployment models, and hands-on AWS (EC2, S3).">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path fill='%231a6fd6' d='M48 50H18a12 12 0 0 1-1.6-23.9A16 16 0 0 1 47 22a14 14 0 0 1 1 28z'/></svg>">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    // Apply the saved theme before first paint to avoid a flash.
+    try { var t = localStorage.getItem('cc-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open contents" aria-controls="sidebar" aria-expanded="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><path d="M48 50H18a12 12 0 0 1-1.6-23.9A16 16 0 0 1 47 22a14 14 0 0 1 1 28z"/></svg>
+      <div>
+        <h1 id="deckTitle">Introduction to Cloud Computing</h1>
+        <p id="deckMeta" class="meta"></p>
+      </div>
+    </div>
+
+    <div class="view-switch" role="tablist" aria-label="View">
+      <button role="tab" id="tabSlides" aria-selected="true" data-view="slides">Slides</button>
+      <button role="tab" id="tabNotes" aria-selected="false" data-view="notes">Notes</button>
+    </div>
+
+    <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode" title="Toggle dark mode">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar" id="sidebar" aria-label="Contents">
+      <div class="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <input id="search" type="search" placeholder="Search slides…  ( / )" autocomplete="off" aria-label="Search slides">
+      </div>
+      <nav id="toc" class="toc"></nav>
+      <p id="noResults" class="no-results" hidden>No slides match your search.</p>
+    </aside>
+    <div class="scrim" id="scrim" hidden></div>
+
+    <main id="main" tabindex="-1">
+      <!-- Slides view -->
+      <section id="slidesView" class="view" aria-label="Slide viewer">
+        <div class="stage-wrap">
+          <p class="crumb"><span id="crumbSection"></span></p>
+          <div class="stage" id="stage">
+            <img id="slideImg" alt="" width="1280" height="960">
+            <button class="nav-zone prev" id="prevZone" aria-label="Previous slide"><span>‹</span></button>
+            <button class="nav-zone next" id="nextZone" aria-label="Next slide"><span>›</span></button>
+          </div>
+
+          <div class="controls">
+            <button class="btn" id="prevBtn" aria-label="Previous slide">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg><span>Prev</span>
+            </button>
+            <div class="counter">
+              <label for="jump" class="sr-only">Go to slide</label>
+              <input id="jump" type="number" min="1" inputmode="numeric">
+              <span>/ <span id="total"></span></span>
+            </div>
+            <button class="btn" id="nextBtn" aria-label="Next slide">
+              <span>Next</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+            <button class="icon-btn" id="fsBtn" aria-label="Full screen (F)" title="Full screen (F)">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+            </button>
+          </div>
+          <div class="progress" aria-hidden="true"><div id="progressBar"></div></div>
+        </div>
+
+        <article class="slide-notes" aria-live="polite">
+          <p class="eyebrow">Slide <span id="notesNum"></span></p>
+          <h2 id="slideTitle"></h2>
+          <ul id="slideNotes"></ul>
+        </article>
+
+        <div class="filmstrip" id="filmstrip" aria-label="Slide thumbnails"></div>
+      </section>
+
+      <!-- Notes view -->
+      <section id="notesView" class="view" aria-label="Study notes" hidden>
+        <div class="notes-head">
+          <h2>Study notes</h2>
+          <p>Every slide as a readable outline. Click a thumbnail to open that slide.</p>
+          <button class="btn" id="printBtn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2M8 14h8v7H8z"/></svg><span>Print / Save PDF</span>
+          </button>
+        </div>
+        <div id="notesList"></div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="foot">
+    <span>Keyboard: <kbd>←</kbd> <kbd>→</kbd> navigate · <kbd>F</kbd> full screen · <kbd>N</kbd> notes · <kbd>/</kbd> search</span>
+  </footer>
+
+  <script src="data/slides.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
